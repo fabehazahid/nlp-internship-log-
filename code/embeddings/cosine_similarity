@@ -1,0 +1,16 @@
+import spacy
+from sklearn.metrics.pairwise import cosine_similarity
+
+nlp = spacy.load("en_core_web_md")  # Use a model with vectors
+
+def get_similarity(text1, text2):
+    vec1 = nlp(text1).vector.reshape(1, -1)
+    vec2 = nlp(text2).vector.reshape(1, -1)
+    return cosine_similarity(vec1, vec2)[0][0]
+
+# Example usage
+if __name__ == "__main__":
+    t1 = "The cat sat on the mat."
+    t2 = "A dog lay on the rug."
+    sim = get_similarity(t1, t2)
+    print(f"Cosine Similarity: {sim:.4f}")
